@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Silverthorne Colorado May 2026 — Adventure Awaits</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <script>
+    firebase.initializeApp({
+      apiKey: "AIzaSyCbdW3IIRqxl5RAdE1X7ZojQtiunb06bTc",
+      authDomain: "colorado-trip-e2ebd.firebaseapp.com",
+      databaseURL: "https://colorado-trip-e2ebd-default-rtdb.firebaseio.com",
+      projectId: "colorado-trip-e2ebd",
+      storageBucket: "colorado-trip-e2ebd.firebasestorage.app",
+      messagingSenderId: "148350333165",
+      appId: "1:148350333165:web:00beaf9e7977c0216fdce4"
+    });
+    const db = firebase.database();
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pine:    #2d5016;
+      --sage:    #5a7a3a;
+      --sky:     #4a9eca;
+      --deep:    #1a3a5c;
+      --snow:    #f4f0eb;
+      --gold:    #e8a020;
+      --sunset:  #d4603a;
+      --rock:    #8b7355;
+      --cream:   #fdf6ec;
+      --dark:    #1c1c1c;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ─────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: linear-gradient(180deg,
+        #0d1b2a 0%,
+        #1a3a5c 25%,
+        #4a9eca 55%,
+        #7ec8e3 70%,
+        #c8dfa8 85%,
+        #4a7c2e 100%
+      );
+    }
+
+    /* Stars */
+    .stars {
+      position: absolute; inset: 0;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle 3s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.3; transform: scale(1); }
+      to   { opacity: 1;   transform: scale(1.4); }
+    }
+
+    /* Sun */
+    .sun {
+      position: absolute;
+      top: 22%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px; height: 90px;
+      background: radial-gradient(circle, #ffe066 0%, #f9a825 60%, transparent 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 60px 30px rgba(255,220,50,0.35), 0 0 120px 60px rgba(255,180,0,0.15);
+      animation: sunRise 1.2s ease-out forwards;
+    }
+    @keyframes sunRise { from { top: 50%; opacity: 0; } to { top: 22%; opacity: 1; } }
+
+    /* Mountains */
+    .mountains {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+    }
+
+    .mountains svg { width: 100%; display: block; }
+
+    /* Hero text */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 2rem;
+      margin-top: -8vh;
+    }
+
+    .badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: .4rem 1.1rem;
+      border-radius: 99px;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      text-shadow: 0 4px 30px rgba(0,0,0,0.4);
+      margin-bottom: .4rem;
+    }
+
+    .hero h1 span {
+      color: #ffe066;
+      display: block;
+    }
+
+    .hero-sub {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 2.5rem;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .85rem 2rem;
+      border-radius: 99px;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.25); }
+
+    .btn-primary {
+      background: var(--gold);
+      color: #1c1c1c;
+      border: none;
+    }
+
+    .btn-ghost {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.6);
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .5rem;
+      animation: bounce 2s infinite;
+    }
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.4);
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50%      { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ── SECTION BASICS ────────────────────────────────── */
+    section { padding: 5rem 1.5rem; }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: .6rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      color: #555;
+      max-width: 560px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    /* ── TRIP OVERVIEW STRIP ───────────────────────────── */
+    .overview {
+      background: var(--pine);
+      color: #fff;
+      padding: 0;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .overview-item {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+    }
+    .overview-item:last-child { border-right: none; }
+
+    .overview-icon {
+      font-size: 2rem;
+      margin-bottom: .6rem;
+    }
+
+    .overview-item h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: .2rem;
+    }
+
+    .overview-item p {
+      font-size: .85rem;
+      opacity: .7;
+    }
+
+    /* ── ACTIVITIES ────────────────────────────────────── */
+    .activities { background: var(--cream); }
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .activity-card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.07);
+      transition: transform .25s, box-shadow .25s;
+      cursor: pointer;
+    }
+    .activity-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.13);
+    }
+
+    .activity-thumb {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .activity-body { padding: 1.4rem; }
+
+    .activity-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .25rem .8rem;
+      border-radius: 99px;
+      margin-bottom: .7rem;
+    }
+
+    .activity-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: .4rem;
+    }
+
+    .activity-body p {
+      font-size: .88rem;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .activity-meta {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      font-size: .8rem;
+      color: #888;
+    }
+
+    /* ── ITINERARY ─────────────────────────────────────── */
+    .itinerary { background: #f0ebe3; }
+
+    .timeline {
+      position: relative;
+      padding-left: 2.5rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: .75rem;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--sage), var(--sky));
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2.5rem;
+      top: .4rem;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--sage);
+      border: 3px solid var(--cream);
+      box-shadow: 0 0 0 2px var(--sage);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .7rem;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .timeline-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .day-label {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: .3rem;
+    }
+
+    .timeline-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      margin-bottom: .5rem;
+    }
+
+    .timeline-card p {
+      font-size: .88rem;
+      color: #666;
+      line-height: 1.65;
+    }
+
+    .timeline-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: .9rem;
+    }
+
+    .chip {
+      background: var(--snow);
+      border-radius: 99px;
+      font-size: .75rem;
+      padding: .25rem .75rem;
+      color: #555;
+    }
+
+    /* ── PACKING LIST ──────────────────────────────────── */
+    .packing { background: var(--cream); }
+
+    .pack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .pack-category {
+      background: #fff;
+      border-radius: 18px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .pack-category h3 {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--pine);
+    }
+
+    .pack-list {
+      list-style: none;
+    }
+
+    .pack-list li {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      padding: .4rem 0;
+      font-size: .88rem;
+      color: #555;
+      border-bottom: 1px solid #f0ebe3;
+      cursor: pointer;
+      user-select: none;
+      transition: color .15s;
+    }
+    .pack-list li:last-child { border-bottom: none; }
+    .pack-list li.checked { color: #aaa; text-decoration: line-through; }
+
+    .pack-list li .check-box {
+      width: 18px; height: 18px;
+      border-radius: 5px;
+      border: 2px solid #ccc;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s, border-color .15s;
+    }
+    .pack-list li.checked .check-box {
+      background: var(--sage);
+      border-color: var(--sage);
+    }
+    .pack-list li.checked .check-box::after { content: '✓'; color: #fff; font-size: .7rem; }
+
+    /* ── RSVP / WHO'S COMING ───────────────────────────── */
+    .rsvp {
+      background: linear-gradient(135deg, var(--pine) 0%, var(--deep) 100%);
+      color: #fff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rsvp::before {
+      content: '';
+      position: absolute;
+      top: -60px; left: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .rsvp::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; right: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(74,158,202,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    .rsvp .section-label { color: rgba(255,255,255,0.55); }
+    .rsvp .section-title { color: #fff; }
+    .rsvp .section-desc  { color: rgba(255,255,255,0.7); margin: 0 auto 2.5rem; }
+
+    .friends-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-bottom: 3rem;
+    }
+
+    .friend-bubble {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    .avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      border: 3px solid rgba(255,255,255,0.2);
+      transition: transform .2s;
+      cursor: pointer;
+    }
+    .avatar:hover { transform: scale(1.1); }
+
+    .friend-name {
+      font-size: .78rem;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .rsvp-status {
+      font-size: .65rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: .2rem .6rem;
+      border-radius: 99px;
+    }
+    .in  { background: rgba(90,122,58,0.5);  color: #a8d878; }
+    .out { background: rgba(180,60,40,0.4);  color: #f4a0a0; }
+    .tbd { background: rgba(200,200,200,0.15); color: rgba(255,255,255,0.5); }
+
+    .rsvp-form {
+      max-width: 420px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: .9rem;
+    }
+
+    .rsvp-form input {
+      width: 100%;
+      padding: .9rem 1.2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-size: .95rem;
+      outline: none;
+      backdrop-filter: blur(8px);
+      transition: border-color .2s;
+    }
+    .rsvp-form input::placeholder { color: rgba(255,255,255,0.45); }
+    .rsvp-form input:focus { border-color: rgba(255,255,255,0.5); }
+
+    .rsvp-btn-row {
+      display: flex;
+      gap: .8rem;
+    }
+    .rsvp-btn-row .btn { flex: 1; justify-content: center; font-size: .9rem; padding: .8rem 1rem; }
+    .btn-yes { background: var(--sage); color: #fff; border: none; }
+    .btn-no  { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: #fff; }
+
+    /* ── WEATHER BANNER ────────────────────────────────── */
+    .weather {
+      background: var(--snow);
+      padding: 3rem 1.5rem;
+    }
+
+    .weather-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+
+    .weather-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.3rem;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .weather-icon { font-size: 2.2rem; margin-bottom: .5rem; }
+    .weather-temp { font-size: 1.5rem; font-weight: 700; color: var(--deep); }
+    .weather-desc { font-size: .8rem; color: #888; margin-top: .3rem; }
+    .weather-day  { font-size: .75rem; font-weight: 600; letter-spacing: .08em;
+                    text-transform: uppercase; color: var(--sage); margin-bottom: .3rem; }
+
+    /* ── FOOTER ────────────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      font-size: .85rem;
+    }
+
+    footer strong { color: rgba(255,255,255,0.8); }
+
+    /* ── CONFETTI TOAST ────────────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--pine);
+      color: #fff;
+      padding: 1rem 2rem;
+      border-radius: 99px;
+      font-weight: 600;
+      z-index: 1000;
+      transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+      pointer-events: none;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── EXPENSE TRACKER ───────────────────────────────── */
+    .expenses { background: #f0ebe3; }
+
+    .expense-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 800px) { .expense-layout { grid-template-columns: 1fr; } }
+
+    .expense-form-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 1.8rem;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.07);
+    }
+
+    .expense-form-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 1.2rem;
+      color: var(--pine);
+    }
+
+    .expense-field {
+      margin-bottom: .9rem;
+    }
+
+    .expense-field label {
+      display: block;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: .35rem;
+    }
+
+    .expense-field input,
+    .expense-field select {
+      width: 100%;
+      padding: .75rem 1rem;
+      border: 1.5px solid #e0dbd4;
+      border-radius: 10px;
+      font-size: .92rem;
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: #fdf6ec;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .expense-field input:focus,
+    .expense-field select:focus { border-color: var(--sage); background: #fff; }
+
+    .add-expense-btn {
+      width: 100%;
+      padding: .85rem;
+      background: var(--pine);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: .95rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: .4rem;
+      transition: background .2s, transform .15s;
+    }
+    .add-expense-btn:hover { background: var(--sage); transform: translateY(-1px); }
+
+    .expense-list-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 1.8rem;
+      box-shadow: 0 2px 15px rgba(0,0,0,0.07);
+    }
+
+    .expense-list-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 1.2rem;
+      color: var(--pine);
+    }
+
+    .expense-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .75rem 0;
+      border-bottom: 1px solid #f0ebe3;
+      gap: .5rem;
+    }
+    .expense-item:last-child { border-bottom: none; }
+
+    .expense-item-left { flex: 1; }
+    .expense-item-desc { font-size: .9rem; font-weight: 600; color: var(--dark); }
+    .expense-item-meta { font-size: .78rem; color: #999; margin-top: .15rem; }
+
+    .expense-item-amount {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--pine);
+      white-space: nowrap;
+    }
+
+    .expense-item-delete {
+      background: none;
+      border: none;
+      color: #ccc;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: .2rem .4rem;
+      border-radius: 6px;
+      transition: color .15s, background .15s;
+    }
+    .expense-item-delete:hover { color: var(--sunset); background: #ffeee8; }
+
+    .expense-empty {
+      text-align: center;
+      color: #bbb;
+      font-size: .9rem;
+      padding: 2rem 0;
+    }
+
+    .balances-section { margin-top: 2rem; }
+
+    .balances-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--pine);
+    }
+
+    .balance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: .8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .balance-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .balance-name { font-size: .8rem; font-weight: 600; color: #888; margin-bottom: .3rem; }
+    .balance-amount { font-size: 1.2rem; font-weight: 700; }
+    .balance-pos { color: var(--sage); }
+    .balance-neg { color: var(--sunset); }
+    .balance-zero { color: #bbb; }
+    .balance-label { font-size: .7rem; color: #aaa; margin-top: .15rem; }
+
+    .settlements {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1.2rem 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .settlements h4 {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: .8rem;
+    }
+
+    .settlement-row {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .4rem 0;
+      font-size: .88rem;
+      color: #555;
+      border-bottom: 1px solid #f5f0ea;
+    }
+    .settlement-row:last-child { border-bottom: none; }
+    .settlement-row strong { color: var(--dark); }
+    .settlement-arrow { color: var(--sage); font-weight: 700; }
+    .settlement-amount { margin-left: auto; font-weight: 700; color: var(--pine); }
+
+    /* ── SPLIT PILLS ───────────────────────────────────── */
+    .split-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+    }
+    .split-pill {
+      padding: .32rem .8rem;
+      border-radius: 99px;
+      border: 1.5px solid #e0dbd4;
+      background: #fdf6ec;
+      font-size: .8rem;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      color: #888;
+      transition: background .15s, border-color .15s, color .15s;
+    }
+    .split-pill.selected { background: var(--pine); border-color: var(--pine); color: #fff; }
+    .split-pill:hover:not(.selected) { border-color: var(--sage); color: var(--sage); }
+
+    /* ── IMPORTANT INFO ─────────────────────────────────── */
+    .info-section {
+      background: linear-gradient(135deg, var(--pine) 0%, var(--deep) 100%);
+      color: #fff;
+      padding: 4rem 1.5rem;
+    }
+    .info-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .info-card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 1.2rem 1.4rem;
+    }
+    .info-card-icon { font-size: 1.4rem; margin-bottom: .5rem; }
+    .info-card-label {
+      font-size: .7rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: .5rem;
+    }
+    .info-card-value { font-size: .92rem; color: #fff; word-break: break-all; min-height: 1.3em; line-height: 1.5; }
+    .info-card-value a { color: #ffe066; }
+    .info-empty { color: rgba(255,255,255,0.28); font-style: italic; }
+    .info-edit-field {
+      display: none;
+      width: 100%;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+      padding: .45rem .75rem;
+      color: #fff;
+      font-size: .88rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .info-edit-field::placeholder { color: rgba(255,255,255,0.3); }
+    .info-edit-field:focus { border-color: rgba(255,255,255,0.6); }
+    .info-section.editing .info-card-value { display: none; }
+    .info-section.editing .info-edit-field { display: block; }
+
+    /* ── PACK TABS ──────────────────────────────────────── */
+    .pack-tabs {
+      display: flex;
+      gap: .4rem;
+      margin-bottom: 2.5rem;
+      background: #ebe5db;
+      border-radius: 12px;
+      padding: .3rem;
+      width: fit-content;
+    }
+    .pack-tab {
+      padding: .55rem 1.5rem;
+      border-radius: 9px;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: #999;
+      font-family: 'Inter', sans-serif;
+      transition: background .2s, color .2s;
+    }
+    .pack-tab.active {
+      background: #fff;
+      color: var(--pine);
+      box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+    }
+
+    /* ── PACK LIST EDIT CONTROLS ────────────────────────── */
+    .pack-category-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .pack-category-header h3 { margin-bottom: 0; }
+    .add-item-row {
+      display: flex;
+      gap: .5rem;
+      margin-top: .7rem;
+      padding-top: .7rem;
+      border-top: 1px dashed #e8e2da;
+    }
+    .add-item-input {
+      flex: 1;
+      padding: .38rem .7rem;
+      border: 1.5px solid #e0dbd4;
+      border-radius: 8px;
+      font-size: .82rem;
+      font-family: 'Inter', sans-serif;
+      background: #fdf6ec;
+      outline: none;
+      color: var(--dark);
+    }
+    .add-item-input:focus { border-color: var(--sage); background: #fff; }
+    .add-item-btn {
+      background: var(--sage);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: .38rem .85rem;
+      font-size: .88rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .pack-list li .delete-item {
+      margin-left: auto;
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      color: #ddd;
+      cursor: pointer;
+      font-size: .78rem;
+      padding: .15rem .3rem;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity .15s, color .15s;
+      line-height: 1;
+    }
+    .pack-list li:hover .delete-item { opacity: 1; }
+    .pack-list li:hover .delete-item:hover { color: var(--sunset); }
+
+    /* ── GROUP GEAR ─────────────────────────────────────── */
+    .gear-intro {
+      font-size: .9rem;
+      color: #666;
+      margin-bottom: 1.8rem;
+      line-height: 1.6;
+    }
+    .gear-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+    }
+    .gear-item {
+      background: #fff;
+      border-radius: 14px;
+      padding: 1rem 1.2rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      display: flex;
+      flex-direction: column;
+      gap: .65rem;
+      transition: opacity .2s;
+    }
+    .gear-item.gear-packed { opacity: .55; }
+    .gear-item-top {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+    }
+    .gear-check {
+      width: 22px; height: 22px;
+      border-radius: 6px;
+      border: 2px solid #ccc;
+      flex-shrink: 0;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, border-color .15s;
+    }
+    .gear-item.gear-packed .gear-check { background: var(--sage); border-color: var(--sage); }
+    .gear-item.gear-packed .gear-check::after { content: '✓'; color: #fff; font-size: .75rem; font-weight: 700; }
+    .gear-name {
+      font-size: .92rem;
+      font-weight: 600;
+      flex: 1;
+      color: var(--dark);
+    }
+    .gear-item.gear-packed .gear-name { text-decoration: line-through; color: #aaa; }
+    .gear-delete {
+      background: none; border: none; color: #ddd;
+      cursor: pointer; font-size: .82rem; padding: .2rem .3rem;
+      border-radius: 4px; transition: color .15s; opacity: 0;
+    }
+    .gear-item:hover .gear-delete { opacity: 1; }
+    .gear-delete:hover { color: var(--sunset) !important; }
+    .gear-claim {
+      display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+    }
+    .gear-claimer {
+      font-size: .8rem; font-weight: 600; color: var(--sage);
+    }
+    .gear-claim select {
+      flex: 1;
+      font-size: .78rem;
+      padding: .28rem .55rem;
+      border-radius: 8px;
+      border: 1.5px solid #e0dbd4;
+      background: #fdf6ec;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      color: #666;
+      cursor: pointer;
+    }
+    .gear-unclaim {
+      font-size: .72rem; color: #bbb; cursor: pointer;
+      text-decoration: underline; background: none; border: none;
+      font-family: 'Inter', sans-serif; padding: 0;
+    }
+    .gear-unclaim:hover { color: var(--sunset); }
+    .gear-add-row {
+      display: flex; gap: .7rem; max-width: 420px;
+    }
+    .gear-add-input {
+      flex: 1; padding: .7rem 1rem;
+      border: 1.5px solid #e0dbd4; border-radius: 12px;
+      font-size: .9rem; font-family: 'Inter', sans-serif;
+      background: #fff; outline: none; color: var(--dark);
+    }
+    .gear-add-input:focus { border-color: var(--sage); }
+    .gear-add-btn {
+      background: var(--pine); color: #fff; border: none;
+      border-radius: 12px; padding: .7rem 1.4rem;
+      font-size: .88rem; font-weight: 600; cursor: pointer;
+      white-space: nowrap; transition: background .2s;
+    }
+    .gear-add-btn:hover { background: var(--sage); }
+
+    /* ── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .overview-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+      .rsvp-btn-row  { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── HERO ──────────────────────────────────────────────────── -->
+<section class="hero">
+
+  <div class="stars" id="stars"></div>
+  <div class="sun"></div>
+
+  <!-- Mountain SVG landscape -->
+  <div class="mountains">
+    <svg viewBox="0 0 1440 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <!-- Back range (snow-capped) -->
+      <polygon points="0,420 100,200 180,300 280,120 400,280 520,80 640,240 760,60 880,200 1000,90 1120,230 1240,100 1360,220 1440,160 1440,420"
+        fill="#c8dfa8" opacity=".4"/>
+      <!-- Snow caps -->
+      <polygon points="760,60 720,160 800,160" fill="#fff" opacity=".7"/>
+      <polygon points="520,80 490,160 550,160" fill="#fff" opacity=".6"/>
+      <polygon points="1000,90 975,165 1025,165" fill="#fff" opacity=".65"/>
+      <!-- Mid range -->
+      <polygon points="0,420 0,280 120,180 260,300 380,200 500,310 620,180 740,290 860,170 980,285 1100,190 1220,300 1340,195 1440,270 1440,420"
+        fill="#4a7c2e"/>
+      <!-- Foreground trees -->
+      <rect x="0" y="340" width="1440" height="80" fill="#2d5016"/>
+      <!-- Simple pine silhouettes -->
+      <g fill="#1a3a10">
+        <polygon points="60,340 40,420 80,420"/>
+        <polygon points="55,320 38,360 72,360"/>
+        <polygon points="140,340 120,420 160,420"/>
+        <polygon points="135,318 116,360 154,360"/>
+        <polygon points="240,335 218,420 262,420"/>
+        <polygon points="234,310 213,355 255,355"/>
+        <polygon points="350,340 328,420 372,420"/>
+        <polygon points="700,338 678,420 722,420"/>
+        <polygon points="695,315 673,357 717,357"/>
+        <polygon points="800,342 778,420 822,420"/>
+        <polygon points="795,318 773,362 817,362"/>
+        <polygon points="950,335 928,420 972,420"/>
+        <polygon points="945,310 924,354 966,354"/>
+        <polygon points="1100,340 1078,420 1122,420"/>
+        <polygon points="1095,316 1074,360 1116,360"/>
+        <polygon points="1280,338 1258,420 1302,420"/>
+        <polygon points="1275,312 1254,357 1296,357"/>
+        <polygon points="1380,342 1360,420 1400,420"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="badge">✦ Colorado Adventure ✦</div>
+    <h1>Rocky Mountain<span>May 2026</span></h1>
+    <p class="hero-sub">a trip with your favorite people ↓</p>
+    <div class="cta-row">
+      <a href="#activities" class="btn btn-primary">🏔 See the Plan</a>
+      <a href="#rsvp" class="btn btn-ghost">RSVP Now</a>
+    </div>
+  </div>
+
+  <div class="scroll-hint">scroll</div>
+</section>
+
+<!-- ─── OVERVIEW STRIP ─────────────────────────────────────────── -->
+<div class="overview">
+  <div class="overview-grid">
+    <div class="overview-item">
+      <div class="overview-icon">📅</div>
+      <h3>May 25–31</h3>
+      <p>6 nights · 7 days</p>
+    </div>
+    <div class="overview-item">
+      <div class="overview-icon">📍</div>
+      <h3>Silverthorne, CO</h3>
+      <p>Heart of Summit County</p>
+    </div>
+    <div class="overview-item">
+      <div class="overview-icon">👥</div>
+      <h3>The Crew</h3>
+      <p>6 adventurers</p>
+    </div>
+    <div class="overview-item">
+      <div class="overview-icon">🌡️</div>
+      <h3>50–70°F</h3>
+      <p>Perfect hiking weather</p>
+    </div>
+    <div class="overview-item">
+      <div class="overview-icon">🌸</div>
+      <h3>Wildflower Season</h3>
+      <p>Peak bloom incoming</p>
+    </div>
+  </div>
+</div>
+
+<!-- ─── IMPORTANT INFO ────────────────────────────────────────── -->
+<section class="info-section" id="info">
+  <div class="container">
+    <div class="info-header">
+      <div>
+        <p class="section-label" style="color:rgba(255,255,255,0.5)">Trip HQ</p>
+        <h2 class="section-title" style="color:#fff;margin-bottom:.3rem">Important Info 📋</h2>
+        <p style="color:rgba(255,255,255,0.55);font-size:.9rem">Tap Edit to fill in your details — saves to your browser.</p>
+      </div>
+      <div style="display:flex;gap:.7rem;align-items:center">
+        <button class="btn btn-ghost" id="edit-info-btn" onclick="toggleInfoEdit()">✏️ Edit</button>
+        <button class="btn btn-primary" id="save-info-btn" onclick="saveInfo()" style="display:none">💾 Save</button>
+      </div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-icon">📍</div>
+        <div class="info-card-label">Address</div>
+        <div class="info-card-value" id="val-address"><span class="info-empty">Tap Edit to add</span></div>
+        <input class="info-edit-field" id="fld-address" placeholder="123 Mountain Rd, Silverthorne CO" />
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🔑</div>
+        <div class="info-card-label">Door Code</div>
+        <div class="info-card-value" id="val-door"><span class="info-empty">Tap Edit to add</span></div>
+        <input class="info-edit-field" id="fld-door" placeholder="e.g. #1234" />
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🏠</div>
+        <div class="info-card-label">Airbnb Link</div>
+        <div class="info-card-value" id="val-airbnb"><span class="info-empty">Tap Edit to add</span></div>
+        <input class="info-edit-field" id="fld-airbnb" placeholder="https://airbnb.com/rooms/…" />
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">📅</div>
+        <div class="info-card-label">Check-in / Check-out</div>
+        <div class="info-card-value" id="val-checkin"><span class="info-empty">Tap Edit to add</span></div>
+        <input class="info-edit-field" id="fld-checkin" placeholder="Check-in 4pm · Check-out 11am" />
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">📶</div>
+        <div class="info-card-label">WiFi</div>
+        <div class="info-card-value" id="val-wifi"><span class="info-empty">Tap Edit to add</span></div>
+        <input class="info-edit-field" id="fld-wifi" placeholder="Network: … · Password: …" />
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">📝</div>
+        <div class="info-card-label">Notes</div>
+        <div class="info-card-value" id="val-notes"><span class="info-empty">Tap Edit to add</span></div>
+        <input class="info-edit-field" id="fld-notes" placeholder="Parking, pets, host number…" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ACTIVITIES ─────────────────────────────────────────────── -->
+<section class="activities" id="activities">
+  <div class="container">
+    <p class="section-label">What We're Doing</p>
+    <h2 class="section-title">Epic Colorado Adventures</h2>
+    <p class="section-desc">From jaw-dropping hikes to soaking in natural hot springs — May is prime time in the Rockies.</p>
+
+    <div class="activity-grid">
+
+      <div class="activity-card">
+        <div class="activity-thumb" style="background: linear-gradient(135deg,#c8dfa8,#4a7c2e)">🥾</div>
+        <div class="activity-body">
+          <span class="activity-tag" style="background:#eaf5d9;color:#2d5016">Hiking</span>
+          <h3>Rocky Mountain National Park</h3>
+          <p>Over 350 miles of trails. Emerald Lake, Sky Pond, or Bear Lake — all iconic, all stunning. Snow may still cap the peaks.</p>
+          <div class="activity-meta">
+            <span>🗓 Day 1–2</span>
+            <span>⏱ All day</span>
+            <span>💪 Moderate</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-card">
+        <div class="activity-thumb" style="background: linear-gradient(135deg,#a8d4f5,#1a3a5c)">🌊</div>
+        <div class="activity-body">
+          <span class="activity-tag" style="background:#daeeff;color:#1a3a5c">Rafting</span>
+          <h3>Arkansas River White Water</h3>
+          <p>May snowmelt means peak flows on the Arkansas. Royal Gorge and Browns Canyon offer everything from Class II to V rapids.</p>
+          <div class="activity-meta">
+            <span>🗓 Day 3</span>
+            <span>⏱ Half day</span>
+            <span>🌊 Thrilling</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-card">
+        <div class="activity-thumb" style="background: linear-gradient(135deg,#f5d0a8,#c87941)">♨️</div>
+        <div class="activity-body">
+          <span class="activity-tag" style="background:#fdf0e0;color:#a05020">Hot Springs</span>
+          <h3>Strawberry Park Hot Springs</h3>
+          <p>Hidden in the Steamboat Springs forest, these natural pools are the ultimate after-hike wind-down. Rustic and magical.</p>
+          <div class="activity-meta">
+            <span>🗓 Day 4</span>
+            <span>🌙 Evening</span>
+            <span>😌 Chill</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-card">
+        <div class="activity-thumb" style="background: linear-gradient(135deg,#e8e0d5,#8b7355)">🦌</div>
+        <div class="activity-body">
+          <span class="activity-tag" style="background:#f5efe6;color:#6b5030">Wildlife</span>
+          <h3>Elk & Wildlife Watching</h3>
+          <p>Moose, elk, bighorn sheep, and marmots are everywhere in May. Bring binoculars and patience — you'll see something incredible.</p>
+          <div class="activity-meta">
+            <span>🗓 Any day</span>
+            <span>🌅 Dawn/Dusk</span>
+            <span>📷 Photo op</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-card">
+        <div class="activity-thumb" style="background: linear-gradient(135deg,#d4e8f5,#4a9eca)">🚵</div>
+        <div class="activity-body">
+          <span class="activity-tag" style="background:#e0f0fa;color:#1a5a8c">Biking</span>
+          <h3>Vail Pass Bike Path</h3>
+          <p>One of Colorado's most iconic paved trails — 17 miles from Vail Pass down to Copper Mountain with jaw-dropping alpine views the whole way.</p>
+          <div class="activity-meta">
+            <span>🗓 Day 5</span>
+            <span>⏱ 3–5 hrs</span>
+            <span>🚵 Fun</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-card">
+        <div class="activity-thumb" style="background: linear-gradient(135deg,#f5e8a8,#e8a020)">🍺</div>
+        <div class="activity-body">
+          <span class="activity-tag" style="background:#fdf5dc;color:#9a6010">Nightlife</span>
+          <h3>Dillon Dam Brewery + Breckenridge</h3>
+          <p>Dillon Dam Brewery is a Summit County classic. Or head 20 min to Breckenridge's lively Main Street for dinner, bars, and live music.</p>
+          <div class="activity-meta">
+            <span>🗓 Every evening</span>
+            <span>🌙 Evening</span>
+            <span>🍻 Social</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── ITINERARY ──────────────────────────────────────────────── -->
+<section class="itinerary" id="itinerary">
+  <div class="container">
+    <p class="section-label">The Schedule</p>
+    <h2 class="section-title">Day by Day</h2>
+    <p class="section-desc">A loose plan — enough structure to actually do things, enough flex for spontaneous detours.</p>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot">1</div>
+        <div class="timeline-card">
+          <p class="day-label">Sunday — Arrival Day</p>
+          <h3>Silverthorne — We Made It 🏔</h3>
+          <p>Leave Matthew's at 4am. Long drive through the mountains, arrive mid-morning. Hit the grocery store to stock up, unpack, hydrate — altitude hits hard at 8,000 ft. Easy dinner at the house and an early night. Tomorrow starts the real trip.</p>
+          <div class="timeline-tags">
+            <span class="chip">🚗 4am departure</span>
+            <span class="chip">🛒 Grocery run</span>
+            <span class="chip">💧 Hydrate hard</span>
+            <span class="chip">🌙 Early night</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot">2</div>
+        <div class="timeline-card">
+          <p class="day-label">Monday — Acclimation Day</p>
+          <h3>Dillon Reservoir + Outlets 🛍️</h3>
+          <p>Coffee with mountain views, then a slow lakeside walk around Dillon Reservoir — easy on the lungs while you adjust to altitude. Browse the Silverthorne Outlets in the afternoon. Chill evening back at the house: hot tub, games, good vibes.</p>
+          <div class="timeline-tags">
+            <span class="chip">☕ Mountain coffee</span>
+            <span class="chip">🚶 Lakeside walk</span>
+            <span class="chip">🛍️ Silverthorne Outlets</span>
+            <span class="chip">🛁 Hot tub night</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot">3</div>
+        <div class="timeline-card">
+          <p class="day-label">Tuesday — Denver Day Trip</p>
+          <h3>Denver — City Day 🦁</h3>
+          <p>~1.5 hr drive down to Denver. Hit the Denver Zoo, Aquarium, or Museum — grab a CityPass to save on combo tickets. Big city energy after two mountain days. Drive back to Silverthorne in the evening.</p>
+          <div class="timeline-tags">
+            <span class="chip">🚗 1.5 hr drive</span>
+            <span class="chip">🦁 Denver Zoo</span>
+            <span class="chip">🐠 Aquarium</span>
+            <span class="chip">🎟️ CityPass</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot">4</div>
+        <div class="timeline-card">
+          <p class="day-label">Wednesday — Recovery Day</p>
+          <h3>Frisco — Slow Morning, Lake Views 🌊</h3>
+          <p>Sleep in. Head over to Rainbow Lake and the Peaks Trailhead for an easy hike with big views. Brunch in Frisco then wander Main Street and the marina. Optional paddleboarding if the weather cooperates. Chill night back at the house.</p>
+          <div class="timeline-tags">
+            <span class="chip">😴 Sleep in</span>
+            <span class="chip">🌈 Rainbow Lake</span>
+            <span class="chip">🥞 Brunch in Frisco</span>
+            <span class="chip">🏄 Paddleboarding</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot">5</div>
+        <div class="timeline-card">
+          <p class="day-label">Thursday — Breckenridge Day</p>
+          <h3>Breckenridge — Mohawk Trail + Main Street 🏘️</h3>
+          <p>Early morning up Mohawk Lakes Trail — waterfalls, wildflowers, and dramatic alpine basins. Head into Breckenridge for lunch and some shopping. Decide as a group if a second trail is in order, or cruise Boreas Pass Road for incredible views without hiking.</p>
+          <div class="timeline-tags">
+            <span class="chip">🥾 Mohawk Lakes Trail</span>
+            <span class="chip">🍔 Breck lunch</span>
+            <span class="chip">🛍️ Main Street</span>
+            <span class="chip">🚗 Boreas Pass Road</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot">6</div>
+        <div class="timeline-card">
+          <p class="day-label">Friday</p>
+          <h3>St. Mary's Glacier ❄️</h3>
+          <p>One of Colorado's most accessible glaciers — a short but steep hike up to a year-round snowfield at 11,000 ft. Stunning views, possible snowball fights, and a real "we're in Colorado" moment. One of the trip highlights.</p>
+          <div class="timeline-tags">
+            <span class="chip">❄️ St. Mary's Glacier</span>
+            <span class="chip">🏔 11,000 ft</span>
+            <span class="chip">🌨️ Snowfield in May</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot">7</div>
+        <div class="timeline-card">
+          <p class="day-label">Saturday — Flex Day</p>
+          <h3>Your Call — Acorn Creek Trail 🌿</h3>
+          <p>Last full day — the crew decides. Acorn Creek Trail is a great option: peaceful, scenic, and a perfect send-off hike. Or use the day to revisit a favorite spot, squeeze in something you missed, or just decompress before the drive home.</p>
+          <div class="timeline-tags">
+            <span class="chip">🌿 Acorn Creek Trail</span>
+            <span class="chip">🗳️ Group vote</span>
+            <span class="chip">🎒 Last adventure</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── WEATHER ────────────────────────────────────────────────── -->
+<section class="weather">
+  <div class="container">
+    <p class="section-label">May Weather Forecast</p>
+    <h2 class="section-title" style="font-size:1.8rem;margin-bottom:1.5rem">What to Expect</h2>
+    <div class="weather-grid">
+      <div class="weather-card">
+        <p class="weather-day">Early May</p>
+        <div class="weather-icon">🌨️</div>
+        <div class="weather-temp">42–60°F</div>
+        <div class="weather-desc">Cooler, possible snow flurries at elevation</div>
+      </div>
+      <div class="weather-card">
+        <p class="weather-day">Mid May</p>
+        <div class="weather-icon">⛅</div>
+        <div class="weather-temp">48–65°F</div>
+        <div class="weather-desc">Mix of sun & clouds, lighter layers needed</div>
+      </div>
+      <div class="weather-card">
+        <p class="weather-day">Late May</p>
+        <div class="weather-icon">☀️</div>
+        <div class="weather-temp">54–72°F</div>
+        <div class="weather-desc">Peak hiking weather, afternoon thunder possible</div>
+      </div>
+      <div class="weather-card">
+        <p class="weather-day">Elevation</p>
+        <div class="weather-icon">🏔️</div>
+        <div class="weather-temp">–15°F drop</div>
+        <div class="weather-desc">Per 5,000ft gain — always layer up</div>
+      </div>
+      <div class="weather-card">
+        <p class="weather-day">Rain</p>
+        <div class="weather-icon">🌧️</div>
+        <div class="weather-temp">~40% chance</div>
+        <div class="weather-desc">Short afternoon showers — pack a rain shell</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PACKING LIST ───────────────────────────────────────────── -->
+<section class="packing" id="packing">
+  <div class="container">
+    <p class="section-label">Pack Smart</p>
+    <h2 class="section-title">Packing Lists</h2>
+    <p class="section-desc">May in the Rockies means wildly variable weather. Layers are life.</p>
+
+    <div class="pack-tabs">
+      <button class="pack-tab active" id="tab-personal" onclick="switchPackTab('personal')">🎒 My Pack List</button>
+      <button class="pack-tab" id="tab-gear" onclick="switchPackTab('gear')">🏕️ Group Gear</button>
+    </div>
+
+    <!-- Personal pack list (JS rendered) -->
+    <div id="panel-personal">
+      <div class="pack-grid" id="pack-grid"></div>
+    </div>
+
+    <!-- Group gear (JS rendered) -->
+    <div id="panel-gear" style="display:none">
+      <p class="gear-intro">Stuff only one person needs to bring — claim it, pack it, check it off. Everyone sees who's got what.</p>
+      <div class="gear-grid" id="gear-grid"></div>
+      <div class="gear-add-row">
+        <input type="text" class="gear-add-input" id="gear-input" placeholder="Add a group item (e.g. Cooler, Speaker…)" onkeydown="if(event.key==='Enter') addGearItem()" />
+        <button class="gear-add-btn" onclick="addGearItem()">+ Add</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── RSVP ───────────────────────────────────────────────────── -->
+<section class="rsvp" id="rsvp">
+  <div class="container" style="position:relative;z-index:1">
+    <p class="section-label">The Crew</p>
+    <h2 class="section-title">Who's In? 🙋</h2>
+    <p class="section-desc">We've got the cabin booked. All we need is you.</p>
+
+    <div class="friends-row">
+      <div class="friend-bubble">
+        <div class="avatar" style="background:#4a7c2e">🧗</div>
+        <span class="friend-name">Diego</span>
+        <span class="rsvp-status in">In ✓</span>
+      </div>
+      <div class="friend-bubble">
+        <div class="avatar" style="background:#1a3a5c">🏔️</div>
+        <span class="friend-name">Alan</span>
+        <span class="rsvp-status in">In ✓</span>
+      </div>
+      <div class="friend-bubble">
+        <div class="avatar" style="background:#8b4513">🌲</div>
+        <span class="friend-name">Colten</span>
+        <span class="rsvp-status in">In ✓</span>
+      </div>
+      <div class="friend-bubble">
+        <div class="avatar" style="background:#6b3070">🌸</div>
+        <span class="friend-name">Trinity</span>
+        <span class="rsvp-status in">In ✓</span>
+      </div>
+      <div class="friend-bubble">
+        <div class="avatar" style="background:#c87941">⭐</div>
+        <span class="friend-name">Piper (me!)</span>
+        <span class="rsvp-status in">In ✓</span>
+      </div>
+      <div class="friend-bubble">
+        <div class="avatar" style="background:#2c6e49">🦅</div>
+        <span class="friend-name">Matthew</span>
+        <span class="rsvp-status in">In ✓</span>
+      </div>
+    </div>
+
+    <p style="color:rgba(255,255,255,0.6);font-size:.95rem;margin-top:1rem">All 6 confirmed — the crew is locked in. 🎉</p>
+  </div>
+</section>
+
+<!-- ─── EXPENSE TRACKER ───────────────────────────────────────── -->
+<section class="expenses" id="expenses">
+  <div class="container">
+    <p class="section-label">Group Expenses</p>
+    <h2 class="section-title">Split the Bill 💸</h2>
+    <p class="section-desc">Log who paid, choose who splits it, and see instantly who owes who.</p>
+
+    <div class="expense-layout">
+
+      <!-- Add expense form -->
+      <div class="expense-form-card">
+        <h3>Add an Expense</h3>
+        <div class="expense-field">
+          <label>What for?</label>
+          <input type="text" id="exp-desc" placeholder="e.g. Rafting tickets, Grocery run…" />
+        </div>
+        <div class="expense-field">
+          <label>Who Paid?</label>
+          <select id="exp-payer">
+            <option value="">Select a person…</option>
+            <option>Diego</option>
+            <option>Alan</option>
+            <option>Colten</option>
+            <option>Trinity</option>
+            <option>Piper</option>
+            <option>Matthew</option>
+          </select>
+        </div>
+        <div class="expense-field">
+          <label>Total Amount ($)</label>
+          <input type="number" id="exp-amount" placeholder="0.00" min="0" step="0.01" />
+        </div>
+        <div class="expense-field">
+          <label>Split with? <span style="font-size:.75rem;color:#bbb;font-weight:400;text-transform:none;letter-spacing:0">(tap to toggle)</span></label>
+          <div class="split-pills" id="split-pills"></div>
+        </div>
+        <button class="add-expense-btn" onclick="addExpense()">+ Add Expense</button>
+      </div>
+
+      <!-- Expense list -->
+      <div class="expense-list-card">
+        <h3>All Expenses</h3>
+        <div id="expense-list">
+          <p class="expense-empty">No expenses yet — add the first one!</p>
+        </div>
+        <div style="margin-top:1rem;padding-top:1rem;border-top:2px solid #f0ebe3;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:.85rem;color:#999">Total trip spend</span>
+          <span style="font-size:1.3rem;font-weight:700;color:var(--pine)" id="total-display">$0.00</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Balances -->
+    <div class="balances-section">
+      <h3>Who Owes What</h3>
+      <div class="balance-grid" id="balance-grid">
+        <!-- generated by JS -->
+      </div>
+      <div class="settlements" id="settlements-box" style="display:none">
+        <h4>✦ Settle Up</h4>
+        <div id="settlements-list"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────────────────────── -->
+<footer>
+  <p style="font-size:1.5rem;margin-bottom:.5rem">🏔️</p>
+  <p><strong>Silverthorne, Colorado — May 24–31, 2026</strong></p>
+  <p style="margin-top:.4rem">Adventure is calling. Don't leave your friends hanging.</p>
+</footer>
+
+<!-- ─── TOAST ──────────────────────────────────────────────────── -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // Shared crew list — must be defined first, used by gear + expense tracker
+  const MEMBERS = ['Diego','Alan','Colten','Trinity','Piper','Matthew'];
+
+  // Generate stars
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 1;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*55}%;
+      left:${Math.random()*100}%;
+      animation-delay:${Math.random()*4}s;
+      animation-duration:${2+Math.random()*3}s;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  // ── PACK TAB SWITCHER ───────────────────────────────
+  function switchPackTab(tab) {
+    document.getElementById('panel-personal').style.display = tab === 'personal' ? '' : 'none';
+    document.getElementById('panel-gear').style.display     = tab === 'gear'     ? '' : 'none';
+    document.getElementById('tab-personal').classList.toggle('active', tab === 'personal');
+    document.getElementById('tab-gear').classList.toggle('active', tab === 'gear');
+  }
+
+  // ── PERSONAL PACK LIST ───────────────────────────────
+  const DEFAULT_PACK = [
+    { id:'clothing', icon:'🧥', name:'Clothing', items:[
+      {id:101,text:'Base layer (merino wool)',checked:false},
+      {id:102,text:'Fleece mid-layer',checked:false},
+      {id:103,text:'Waterproof rain shell',checked:false},
+      {id:104,text:'Hiking pants × 2',checked:false},
+      {id:105,text:'Shorts for warm days',checked:false},
+      {id:106,text:'Warm hat + gloves',checked:false},
+      {id:107,text:'Sun hat or cap',checked:false},
+      {id:108,text:'Swimsuit (hot springs!)',checked:false},
+    ]},
+    { id:'footwear', icon:'👟', name:'Footwear', items:[
+      {id:201,text:'Waterproof hiking boots',checked:false},
+      {id:202,text:'Trail runners (backup)',checked:false},
+      {id:203,text:'Flip flops (hot springs)',checked:false},
+      {id:204,text:'Wool hiking socks × 4',checked:false},
+      {id:205,text:'Gaiters (for snow)',checked:false},
+    ]},
+    { id:'gear', icon:'🎒', name:'Gear', items:[
+      {id:301,text:'Day pack (20–30L)',checked:false},
+      {id:302,text:'Trekking poles',checked:false},
+      {id:303,text:'Hydration reservoir / bottles',checked:false},
+      {id:304,text:'Headlamp + batteries',checked:false},
+      {id:305,text:'Camera or phone mount',checked:false},
+      {id:306,text:'Binoculars',checked:false},
+    ]},
+    { id:'health', icon:'🩹', name:'Safety & Health', items:[
+      {id:401,text:'SPF 50+ sunscreen',checked:false},
+      {id:402,text:'Lip balm with SPF',checked:false},
+      {id:403,text:'First aid kit',checked:false},
+      {id:404,text:'Altitude sickness meds',checked:false},
+      {id:405,text:'Bug repellent',checked:false},
+      {id:406,text:'Electrolyte packets',checked:false},
+      {id:407,text:'Personal medications',checked:false},
+    ]},
+    { id:'food', icon:'🍫', name:'Snacks & Food', items:[
+      {id:501,text:'Trail mix & nuts',checked:false},
+      {id:502,text:'Energy bars × lots',checked:false},
+      {id:503,text:'Instant coffee packets',checked:false},
+      {id:504,text:'Cabin dinner groceries',checked:false},
+      {id:505,text:'Breakfast supplies',checked:false},
+    ]},
+    { id:'tech', icon:'📱', name:'Tech & Docs', items:[
+      {id:601,text:'Offline maps (AllTrails)',checked:false},
+      {id:602,text:'RMNP timed entry pass',checked:false},
+      {id:603,text:'Portable power bank',checked:false},
+      {id:604,text:'Rental car confirmation',checked:false},
+      {id:605,text:'Travel insurance docs',checked:false},
+    ]},
+  ];
+
+  let packData = DEFAULT_PACK;
+
+  db.ref('pack').on('value', snap => {
+    packData = snap.val() || DEFAULT_PACK;
+    renderPackList();
+  });
+
+  function savePack() { db.ref('pack').set(packData); }
+
+  function renderPackList() {
+    document.getElementById('pack-grid').innerHTML = packData.map(cat => `
+      <div class="pack-category">
+        <div class="pack-category-header">
+          <h3>${cat.icon} ${cat.name}</h3>
+        </div>
+        <ul class="pack-list">
+          ${cat.items.map(item => `
+            <li class="${item.checked ? 'checked' : ''}" onclick="togglePackItem('${cat.id}',${item.id})">
+              <span class="check-box"></span>
+              <span style="flex:1">${item.text}</span>
+              <button class="delete-item" onclick="event.stopPropagation();deletePackItem('${cat.id}',${item.id})" title="Remove">✕</button>
+            </li>`).join('')}
+        </ul>
+        <div class="add-item-row">
+          <input type="text" class="add-item-input" id="addinput-${cat.id}" placeholder="Add item…"
+            onkeydown="if(event.key==='Enter') addPackItem('${cat.id}')" />
+          <button class="add-item-btn" onclick="addPackItem('${cat.id}')">+</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function togglePackItem(catId, itemId) {
+    const cat  = packData.find(c => c.id === catId);
+    const item = cat.items.find(i => i.id === itemId);
+    item.checked = !item.checked;
+    savePack();
+    renderPackList();
+    const total   = packData.flatMap(c => c.items).length;
+    const checked = packData.flatMap(c => c.items).filter(i => i.checked).length;
+    if (checked > 0 && checked % 5 === 0) showToast(`${checked}/${total} packed — nice work! 🎒`);
+  }
+
+  function deletePackItem(catId, itemId) {
+    const cat = packData.find(c => c.id === catId);
+    cat.items = cat.items.filter(i => i.id !== itemId);
+    savePack(); renderPackList();
+  }
+
+  function addPackItem(catId) {
+    const input = document.getElementById(`addinput-${catId}`);
+    const text  = input.value.trim();
+    if (!text) return;
+    const cat = packData.find(c => c.id === catId);
+    cat.items.push({ id: Date.now(), text, checked: false });
+    savePack(); renderPackList();
+    // re-focus the input in the re-rendered list
+    setTimeout(() => { const el = document.getElementById(`addinput-${catId}`); if(el) el.focus(); }, 0);
+  }
+
+  renderPackList();
+
+  // ── GROUP GEAR ───────────────────────────────────────
+  const DEFAULT_GEAR = [
+    {id:1001, text:'Portable speaker',     claimedBy:null, packed:false},
+    {id:1002, text:'Cooler',               claimedBy:null, packed:false},
+    {id:1003, text:'Card games / dice',    claimedBy:null, packed:false},
+    {id:1004, text:'Extra trash bags',     claimedBy:null, packed:false},
+    {id:1005, text:'Paper towels + wipes', claimedBy:null, packed:false},
+    {id:1006, text:'Group first aid kit',  claimedBy:null, packed:false},
+    {id:1007, text:'Portable charger (group)', claimedBy:null, packed:false},
+    {id:1008, text:'Sunscreen (shared)',   claimedBy:null, packed:false},
+  ];
+
+  let gearData = DEFAULT_GEAR;
+
+  db.ref('gear').on('value', snap => {
+    gearData = snap.val() || DEFAULT_GEAR;
+    renderGearList();
+  });
+
+  function saveGear() { db.ref('gear').set(gearData); }
+
+  function renderGearList() {
+    const grid = document.getElementById('gear-grid');
+    if (!gearData.length) {
+      grid.innerHTML = '<p style="color:#aaa;font-size:.9rem;grid-column:1/-1">No group gear yet — add something below!</p>';
+      return;
+    }
+    grid.innerHTML = gearData.map(item => `
+      <div class="gear-item ${item.packed ? 'gear-packed' : ''}">
+        <div class="gear-item-top">
+          <div class="gear-check" onclick="toggleGearPacked(${item.id})"></div>
+          <span class="gear-name">${item.text}</span>
+          <button class="gear-delete" onclick="deleteGearItem(${item.id})">✕</button>
+        </div>
+        <div class="gear-claim">
+          ${item.claimedBy
+            ? `<span class="gear-claimer">✓ ${item.claimedBy} is bringing this</span>
+               <button class="gear-unclaim" onclick="unclaimGear(${item.id})">unclaim</button>`
+            : `<select onchange="claimGear(${item.id}, this.value)">
+                 <option value="">— Who's bringing this?</option>
+                 ${MEMBERS.map(m => `<option value="${m}">${m}</option>`).join('')}
+               </select>`
+          }
+        </div>
+      </div>`).join('');
+  }
+
+  function toggleGearPacked(id) {
+    const item = gearData.find(g => g.id === id);
+    item.packed = !item.packed;
+    if (item.packed && !item.claimedBy) showToast('Mark who\'s bringing it too! 👆');
+    saveGear(); renderGearList();
+  }
+
+  function claimGear(id, name) {
+    if (!name) return;
+    gearData.find(g => g.id === id).claimedBy = name;
+    saveGear(); renderGearList();
+    showToast(`${name} is bringing it! 🙌`);
+  }
+
+  function unclaimGear(id) {
+    const item = gearData.find(g => g.id === id);
+    item.claimedBy = null; item.packed = false;
+    saveGear(); renderGearList();
+  }
+
+  function deleteGearItem(id) {
+    gearData = gearData.filter(g => g.id !== id);
+    saveGear(); renderGearList();
+  }
+
+  function addGearItem() {
+    const input = document.getElementById('gear-input');
+    const text  = input.value.trim();
+    if (!text) return;
+    gearData.push({ id: Date.now(), text, claimedBy: null, packed: false });
+    saveGear(); renderGearList();
+    input.value = '';
+    showToast(`"${text}" added to group gear!`);
+  }
+
+  // Toast
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // RSVP
+  function rsvpYes() {
+    const name = document.getElementById('rsvp-name').value.trim() || 'Friend';
+    showToast(`🎉 ${name} is IN for Colorado!`);
+    document.getElementById('rsvp-name').value = '';
+    launchConfetti();
+  }
+  function rsvpNo() {
+    const name = document.getElementById('rsvp-name').value.trim() || 'You';
+    showToast(`😢 ${name} will be missed... maybe next time!`);
+    document.getElementById('rsvp-name').value = '';
+  }
+
+  // Simple confetti burst
+  function launchConfetti() {
+    const colors = ['#4a7c2e','#4a9eca','#e8a020','#d4603a','#fff','#a8d4f5'];
+    for (let i = 0; i < 60; i++) {
+      const c = document.createElement('div');
+      c.style.cssText = `
+        position:fixed;
+        top:${Math.random()*40+30}%;
+        left:${Math.random()*100}%;
+        width:${6+Math.random()*6}px;
+        height:${6+Math.random()*6}px;
+        background:${colors[Math.floor(Math.random()*colors.length)]};
+        border-radius:${Math.random()>0.5?'50%':'2px'};
+        pointer-events:none;
+        z-index:9999;
+        animation:fall 1.8s ease-in forwards;
+        animation-delay:${Math.random()*0.5}s;
+      `;
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 2500);
+    }
+  }
+
+  // ── IMPORTANT INFO ───────────────────────────────────
+  const INFO_FIELDS = ['address','door','airbnb','checkin','wifi','notes'];
+
+  function loadInfo() {
+    db.ref('info').on('value', snap => {
+      const saved = snap.val() || {};
+      INFO_FIELDS.forEach(k => {
+        const val = saved[k] || '';
+        document.getElementById(`fld-${k}`).value = val;
+        renderInfoVal(k, val);
+      });
+    });
+  }
+
+  function renderInfoVal(k, val) {
+    const el = document.getElementById(`val-${k}`);
+    if (!val) { el.innerHTML = '<span class="info-empty">Tap Edit to add</span>'; return; }
+    if (k === 'airbnb' && val.startsWith('http')) {
+      el.innerHTML = `<a href="${val}" target="_blank" rel="noopener">🔗 Open Airbnb listing</a>`;
+    } else {
+      el.textContent = val;
+    }
+  }
+
+  function toggleInfoEdit() {
+    document.querySelector('.info-section').classList.add('editing');
+    document.getElementById('edit-info-btn').style.display = 'none';
+    document.getElementById('save-info-btn').style.display = '';
+  }
+
+  function saveInfo() {
+    const data = {};
+    INFO_FIELDS.forEach(k => {
+      data[k] = document.getElementById(`fld-${k}`).value.trim();
+      renderInfoVal(k, data[k]);
+    });
+    db.ref('info').set(data);
+    document.querySelector('.info-section').classList.remove('editing');
+    document.getElementById('edit-info-btn').style.display = '';
+    document.getElementById('save-info-btn').style.display = 'none';
+    showToast('Info saved! 📋');
+  }
+
+  loadInfo();
+
+  // ── EXPENSE TRACKER ─────────────────────────────────
+  let expenses = [];
+
+  db.ref('expenses').on('value', snap => {
+    expenses = snap.val() || [];
+    renderExpenses();
+  });
+
+  function saveExpenses() { db.ref('expenses').set(expenses); }
+
+  function renderSplitPills() {
+    document.getElementById('split-pills').innerHTML = MEMBERS.map(m =>
+      `<div class="split-pill selected" data-member="${m}" onclick="toggleSplitPill(this)">${m}</div>`
+    ).join('');
+  }
+
+  function toggleSplitPill(el) { el.classList.toggle('selected'); }
+
+  function getSelectedSplit() {
+    return [...document.querySelectorAll('#split-pills .split-pill.selected')].map(el => el.dataset.member);
+  }
+
+  function addExpense() {
+    const desc   = document.getElementById('exp-desc').value.trim();
+    const payer  = document.getElementById('exp-payer').value;
+    const amount = parseFloat(document.getElementById('exp-amount').value);
+    let splitWith = getSelectedSplit();
+    if (!desc)   { showToast('Add a description first!'); return; }
+    if (!payer)  { showToast('Select who paid!'); return; }
+    if (!amount || amount <= 0) { showToast('Enter a valid amount!'); return; }
+    if (splitWith.length === 0) { showToast('Select at least one person to split with!'); return; }
+    // Ensure payer is always in the split (they paid so they owe their share too)
+    if (!splitWith.includes(payer)) splitWith = [payer, ...splitWith];
+    expenses.push({ id: Date.now(), desc, payer, amount, splitWith });
+    saveExpenses();
+    renderExpenses();
+    document.getElementById('exp-desc').value   = '';
+    document.getElementById('exp-payer').value  = '';
+    document.getElementById('exp-amount').value = '';
+    renderSplitPills();
+    showToast(`💸 ${payer} paid $${amount.toFixed(2)} for ${desc}`);
+  }
+
+  function deleteExpense(id) {
+    expenses = expenses.filter(e => e.id !== id);
+    saveExpenses();
+    renderExpenses();
+  }
+
+  function renderExpenses() {
+    const list = document.getElementById('expense-list');
+    if (expenses.length === 0) {
+      list.innerHTML = '<p class="expense-empty">No expenses yet — add the first one!</p>';
+      document.getElementById('total-display').textContent = '$0.00';
+      renderBalances();
+      return;
+    }
+    list.innerHTML = expenses.map(e => {
+      const split = e.splitWith || MEMBERS;
+      const perPerson = (e.amount / split.length).toFixed(2);
+      const names = split.length === MEMBERS.length ? 'everyone' : split.join(', ');
+      return `
+        <div class="expense-item">
+          <div class="expense-item-left">
+            <div class="expense-item-desc">${e.desc}</div>
+            <div class="expense-item-meta">${e.payer} paid · $${perPerson}/person · ${names}</div>
+          </div>
+          <div class="expense-item-amount">$${e.amount.toFixed(2)}</div>
+          <button class="expense-item-delete" onclick="deleteExpense(${e.id})" title="Remove">✕</button>
+        </div>`;
+    }).join('');
+    const total = expenses.reduce((s, e) => s + e.amount, 0);
+    document.getElementById('total-display').textContent = `$${total.toFixed(2)}`;
+    renderBalances();
+  }
+
+  function renderBalances() {
+    const net = {};
+    MEMBERS.forEach(m => net[m] = 0);
+    expenses.forEach(e => {
+      const split = e.splitWith || MEMBERS;
+      const share = e.amount / split.length;
+      net[e.payer] += e.amount;
+      split.forEach(m => { net[m] -= share; });
+    });
+
+    const grid = document.getElementById('balance-grid');
+    grid.innerHTML = MEMBERS.map(m => {
+      const v = net[m];
+      const cls = v > 0.005 ? 'balance-pos' : v < -0.005 ? 'balance-neg' : 'balance-zero';
+      const lbl = v > 0.005 ? 'gets back' : v < -0.005 ? 'owes' : 'all even';
+      const sign = v > 0.005 ? '+' : '';
+      return `<div class="balance-card">
+        <div class="balance-name">${m}</div>
+        <div class="balance-amount ${cls}">${sign}$${Math.abs(v).toFixed(2)}</div>
+        <div class="balance-label">${lbl}</div>
+      </div>`;
+    }).join('');
+
+    // Settle up
+    const owed = MEMBERS.filter(m => net[m] >  0.005).map(m => ({ name: m, amt:  net[m] }));
+    const owes = MEMBERS.filter(m => net[m] < -0.005).map(m => ({ name: m, amt: -net[m] }));
+    const rows = [];
+    const o2 = owes.map(x => ({ ...x }));
+    const o1 = owed.map(x => ({ ...x }));
+    let i = 0, j = 0;
+    while (i < o2.length && j < o1.length) {
+      const pay = Math.min(o2[i].amt, o1[j].amt);
+      if (pay > 0.005) rows.push(`<div class="settlement-row"><strong>${o2[i].name}</strong><span class="settlement-arrow">→</span><strong>${o1[j].name}</strong><span class="settlement-amount">$${pay.toFixed(2)}</span></div>`);
+      o2[i].amt -= pay;
+      o1[j].amt -= pay;
+      if (o2[i].amt < 0.005) i++;
+      if (o1[j].amt < 0.005) j++;
+    }
+    const box = document.getElementById('settlements-box');
+    if (rows.length > 0) {
+      box.style.display = 'block';
+      document.getElementById('settlements-list').innerHTML = rows.join('');
+    } else {
+      box.style.display = 'none';
+    }
+  }
+
+  renderSplitPills();
+
+  // ── CONFETTI KEYFRAME ────────────────────────────────
+  const style = document.createElement('style');
+  style.textContent = `@keyframes fall {
+    from { transform: translateY(0) rotate(0deg); opacity:1; }
+    to   { transform: translateY(300px) rotate(720deg); opacity:0; }
+  }`;
+  document.head.appendChild(style);
+</script>
+</body>
+</html>
