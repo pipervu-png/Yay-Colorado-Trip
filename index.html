@@ -899,6 +899,46 @@
     .info-section.editing .info-card-value { display: none; }
     .info-section.editing .info-edit-field { display: block; }
 
+    /* ── PERSON SELECTOR ───────────────────────────────── */
+    .person-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-bottom: 2rem;
+      align-items: center;
+    }
+    .person-selector-label {
+      font-size: .8rem;
+      font-weight: 600;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-right: .3rem;
+    }
+    .person-pill {
+      padding: .45rem 1.1rem;
+      border-radius: 99px;
+      border: 2px solid #e0dbd4;
+      background: #fff;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #888;
+      font-family: 'Inter', sans-serif;
+      transition: all .18s;
+    }
+    .person-pill:hover { border-color: var(--sage); color: var(--sage); }
+    .person-pill.active { background: var(--pine); border-color: var(--pine); color: #fff; }
+    .pack-readonly-banner {
+      background: #fffbec;
+      border: 1.5px solid #f0d060;
+      border-radius: 10px;
+      padding: .6rem 1rem;
+      font-size: .85rem;
+      color: #a07010;
+      margin-bottom: 1.5rem;
+    }
+
     /* ── PACK TABS ──────────────────────────────────────── */
     .pack-tabs {
       display: flex;
@@ -1497,6 +1537,13 @@
 
     <!-- Personal pack list (JS rendered) -->
     <div id="panel-personal">
+      <div class="person-selector">
+        <span class="person-selector-label">Whose list?</span>
+        <!-- pills injected by JS -->
+      </div>
+      <div id="pack-readonly-banner" class="pack-readonly-banner" style="display:none">
+        👀 Viewing <strong id="pack-viewing-name"></strong>'s list — read only
+      </div>
       <div class="pack-grid" id="pack-grid"></div>
     </div>
 
@@ -1664,6 +1711,14 @@
   }
 
   // ── PERSONAL PACK LIST ───────────────────────────────
+
+  // Firebase returns arrays as numbered objects — convert back
+  function fbArr(val) {
+    if (!val) return [];
+    if (Array.isArray(val)) return val;
+    return Object.values(val);
+  }
+
   const DEFAULT_PACK = [
     { id:'clothing', icon:'🧥', name:'Clothing', items:[
       {id:101,text:'Base layer (merino wool)',checked:false},
@@ -1682,7 +1737,7 @@
       {id:204,text:'Wool hiking socks × 4',checked:false},
       {id:205,text:'Gaiters (for snow)',checked:false},
     ]},
-    { id:'gear', icon:'🎒', name:'Gear', items:[
+    { id:'packgear', icon:'🎒', name:'Gear', items:[
       {id:301,text:'Day pack (20–30L)',checked:false},
       {id:302,text:'Trekking poles',checked:false},
       {id:303,text:'Hydration reservoir / bottles',checked:false},
@@ -1715,16 +1770,52 @@
     ]},
   ];
 
-  let packData = DEFAULT_PACK;
+  let packData       = JSON.parse(JSON.stringify(DEFAULT_PACK));
+  let currentPacker  = null;   // currently selected person
+  let packListener   = null;   // active Firebase listener ref
 
-  db.ref('pack').on('value', snap => {
-    packData = snap.val() || DEFAULT_PACK;
-    renderPackList();
-  });
+  // Render person selector pills
+  function renderPersonPills() {
+    const sel = document.querySelector('.person-selector');
+    sel.innerHTML = '<span class="person-selector-label">Whose list?</span>' +
+      MEMBERS.map(m => `<button class="person-pill ${m === currentPacker ? 'active' : ''}"
+        onclick="selectPacker('${m}')">${m}</button>`).join('');
+  }
 
-  function savePack() { db.ref('pack').set(packData); }
+  function selectPacker(name) {
+    currentPacker = name;
+    renderPersonPills();
+
+    // Detach old listener
+    if (packListener) packListener.off('value');
+
+    packListener = db.ref('pack/' + name);
+    packListener.on('value', snap => {
+      const raw = snap.val();
+      if (raw) {
+        packData = fbArr(raw).map(cat => ({ ...cat, items: fbArr(cat.items) }));
+      } else {
+        packData = JSON.parse(JSON.stringify(DEFAULT_PACK));
+      }
+      renderPackList();
+    });
+
+    // Show/hide readonly banner
+    const isMe = true; // everyone can edit their own — no auth, so all editable
+    document.getElementById('pack-readonly-banner').style.display = 'none';
+  }
+
+  function savePack() {
+    if (!currentPacker) return;
+    db.ref('pack/' + currentPacker).set(packData);
+  }
 
   function renderPackList() {
+    if (!currentPacker) {
+      document.getElementById('pack-grid').innerHTML =
+        '<p style="color:#aaa;grid-column:1/-1;text-align:center;padding:2rem 0">👆 Pick a name above to see their packing list</p>';
+      return;
+    }
     document.getElementById('pack-grid').innerHTML = packData.map(cat => `
       <div class="pack-category">
         <div class="pack-category-header">
@@ -1747,33 +1838,35 @@
   }
 
   function togglePackItem(catId, itemId) {
+    if (!currentPacker) return;
     const cat  = packData.find(c => c.id === catId);
     const item = cat.items.find(i => i.id === itemId);
     item.checked = !item.checked;
     savePack();
-    renderPackList();
     const total   = packData.flatMap(c => c.items).length;
     const checked = packData.flatMap(c => c.items).filter(i => i.checked).length;
     if (checked > 0 && checked % 5 === 0) showToast(`${checked}/${total} packed — nice work! 🎒`);
   }
 
   function deletePackItem(catId, itemId) {
+    if (!currentPacker) return;
     const cat = packData.find(c => c.id === catId);
     cat.items = cat.items.filter(i => i.id !== itemId);
-    savePack(); renderPackList();
+    savePack();
   }
 
   function addPackItem(catId) {
+    if (!currentPacker) return;
     const input = document.getElementById(`addinput-${catId}`);
     const text  = input.value.trim();
     if (!text) return;
     const cat = packData.find(c => c.id === catId);
     cat.items.push({ id: Date.now(), text, checked: false });
-    savePack(); renderPackList();
-    // re-focus the input in the re-rendered list
+    savePack();
     setTimeout(() => { const el = document.getElementById(`addinput-${catId}`); if(el) el.focus(); }, 0);
   }
 
+  renderPersonPills();
   renderPackList();
 
   // ── GROUP GEAR ───────────────────────────────────────
